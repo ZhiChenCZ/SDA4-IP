@@ -1,12 +1,16 @@
-public class Welcome {
+public class Welcome extends TaskManager{
 
-    private int toDO = 0;
-    private int done = 0;
-    // Add in Counter variable and as parameter for constructor
-    //later
-    //public Welcome (){}
+    private int toDO;
+    private int done;
 
-    public String printWelcome(){
+    public Welcome(){
+
+        this.toDO = getToDO();
+        this.done = getDone();
+    }
+
+    @Override
+    public String toString(){
 
         return (">> Welcome to ToDoly\n" +
                 ">> You have " + toDO + " tasks todo and " +
