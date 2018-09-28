@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Zhi Chen
  * @version 2018.09.22
  */
-public class Task {
+public class Task implements Comparable<Task>{
 
 
     private String title;
@@ -33,6 +33,10 @@ public class Task {
         this.done = false;
     }
 
+    /**
+     * Accessor method for title of task.
+     * @return String title.
+     */
     public String getTitle(){
 
         return title;
@@ -131,5 +135,11 @@ public class Task {
                 "Description: " + description + "\n" + "Status: " + getStatus();
 
         return task;
+    }
+
+    @Override
+    public int compareTo(Task task){
+        
+        return dueDate.compareTo(getDueDate());
     }
 }

@@ -1,12 +1,13 @@
-public class Welcome extends TaskManager{
+public class Welcome{
 
     private int toDO;
     private int done;
 
     public Welcome(){
 
-        this.toDO = getToDO();
-        this.done = getDone();
+        TaskManager taskManager = new TaskManager();
+        this.toDO = taskManager.getToDO();
+        this.done = taskManager.getDone();
     }
 
     @Override
@@ -23,4 +24,6 @@ public class Welcome extends TaskManager{
                 ">>");
 
     }
+
+
 }

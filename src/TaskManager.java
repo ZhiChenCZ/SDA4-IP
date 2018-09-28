@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
-public class TaskManager implements Comparable<Task>{
+public class TaskManager{
 
     private ArrayList<Task> taskList;
     private HashMap<String, Integer> counter;
@@ -47,20 +48,58 @@ public class TaskManager implements Comparable<Task>{
         }
     }
 
-    @Override
-    public int compareTo(Task task){
+    private void sortByDate(){
 
-        return 0;
+        Collections.sort(taskList);
     }
 
-    public void sortByDate(){
+    public ArrayList<Task> getTaskListSortedDate(){
 
+        sortByDate();
+        return taskList;
+    }
 
+    public void filterByProject(String projectTitle){
+
+        taskList.stream()
+                .filter(s -> projectTitle.equals(s.getProjectTitle()))
+                .forEach(s -> System.out.println(s.toString()));
+
+        /*taskList.forEach(
+                (Task task) -> {
+                    if(task.getProjectTitle().contains(projectTitle)){
+                        System.out.println(toString());
+                    }
+                }
+        );*/
     }
 
     public void addTask(Task task){
 
         taskList.add(task);
     }
+
+    public void editTask(String projectTitle){
+
+        //To specify Task as there may be multiple tasks sharing the same title.
+        ArrayList<Task> narrowedList = new ArrayList<>();
+        for(Task task : taskList){
+            if (task.getProjectTitle().equals(projectTitle)){
+                narrowedList.add(task);
+            }
+        }
+    }
+
+    /*public void updateTitle(String title, String newTitle){
+
+        getNarrowedList();
+        for(Task task : narrowedList){
+            if (task.getTitle().equals(title)){
+                task.setTitle(newTitle);
+            }
+        }
+    }*/
+
+
 
 }
