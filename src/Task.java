@@ -42,11 +42,20 @@ public class Task implements Comparable<Task>{
         return title;
     }
 
+    /**
+     * Mutator method to set new task title.
+     * @param newTitle User entry for new task title
+     */
     public void setTitle(String newTitle){
 
         this.title = newTitle;
     }
 
+    /**
+     * Conversion of String dueDate to Date type.
+     * @param dueDate User entry in String format: dd-MMM-yyyy
+     * @return dueDate of type Date.
+     */
     private Date createDate(String dueDate) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
@@ -64,13 +73,18 @@ public class Task implements Comparable<Task>{
 
     /**
      * Accessor for deadline.
-     * @return
+     * @return dueDate of Date type.
      */
     public Date getDueDate(){
 
         return dueDate;
     }
 
+    /**
+     * Mutator method to set new deadline.
+     * @param newDueDate Collects String dueDate from user and converts
+     *                   its type to Date.
+     */
     public void setDueDate(String newDueDate){
 
         this.dueDate = createDate(newDueDate);
@@ -78,32 +92,44 @@ public class Task implements Comparable<Task>{
 
     /**
      * Acessor for details of Task.
-     * @return
+     * @return Additional information of task.
      */
     public  String getDescription(){
 
         return description;
     }
 
+    /**
+     * Mutator method to edit additional information of task.
+     * @param newDescription Edition to task description.
+     */
     public void setDescription(String newDescription) {
 
         this.description = newDescription;
     }
 
     /**
-     * Accessor for Project Title.
-     * @return
+     * Accessor method for Project Title.
+     * @return The project task is currently under.
      */
     public String getProjectTitle(){
 
         return projectTitle;
     }
 
+    /**
+     * Mutator method to change task to another project.
+     * @param newProjectTitle Project that task is shifted to.
+     */
     public void setProjectTitle(String newProjectTitle){
 
         this.projectTitle = newProjectTitle;
     }
 
+    /**
+     * Accessor method with print line to indicate if task is completed.
+     * @return Verification of task status.
+     */
     public String getStatus(){
         if (!done){
             return "Pending action.";
@@ -112,34 +138,59 @@ public class Task implements Comparable<Task>{
         }
     }
 
+    /**
+     * Accessor method to get boolean status of task completion.
+     * @return The status of task.
+     */
     public boolean doneStatus(){
 
         return done;
     }
 
+    /**
+     * Mutator method to change status of task to completed.
+     * @return Task completed.
+     */
     public boolean taskDone(){
 
         return done = true;
     }
 
+    /**
+     * Mutator method to change status of task to pending.
+     * @return Task pending.
+     */
     public boolean taskReset(){
 
         return done = false;
     }
 
+    /**
+     * Prints entire task details.
+     * @return Entire task details.
+     */
     @Override
     public String toString(){
 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+
+        String dateToPrint = formatter.format(dueDate);
+
         String task = "Project Title: " + projectTitle + "\n" +
-                "Task title: "+ title + "\n" + "Deadline: "+ dueDate + "\n" +
-                "Description: " + description + "\n" + "Status: " + getStatus();
+                "Task title: "+ title + "\n" + "Deadline: "+ dateToPrint + "\n" +
+                "Description: " + description + "\n" + "Status: " + getStatus() + "\n";
 
         return task;
     }
 
+    /**
+     * Compares dueDate in task.
+     * @param task Task details input by user.
+     * @return integer value used to compare the dueDates.
+     */
     @Override
     public int compareTo(Task task){
-        
-        return dueDate.compareTo(getDueDate());
+
+        return this.dueDate.compareTo(task.getDueDate());
     }
 }

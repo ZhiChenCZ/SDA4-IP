@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class TaskManager{
 
@@ -17,8 +18,8 @@ public class TaskManager{
 
     public void setCounter(){
 
-        int toDoValue = 0;
-        int doneValue = 0;
+        Integer toDoValue = 0;
+        Integer doneValue = 0;
 
         for (Task task : taskList) {
             if (!task.doneStatus()){
@@ -33,7 +34,7 @@ public class TaskManager{
 
     public Integer getToDO(){
 
-        return counter.get("toDO");
+        return counter.get("toDo");
     }
 
     public Integer getDone(){
@@ -48,15 +49,26 @@ public class TaskManager{
         }
     }
 
-    private void sortByDate(){
+    public ArrayList<Task> getTaskList(){
 
-        Collections.sort(taskList);
+        return taskList;
     }
 
-    public ArrayList<Task> getTaskListSortedDate(){
+    public void sortByDate(){
 
-        sortByDate();
-        return taskList;
+        Collections.sort(taskList);
+        for(Task task : taskList){
+            System.out.println(task);
+        }
+    }
+
+    public HashSet<String> listOfProjectTitle(){
+
+        HashSet<String> projectList = new HashSet<>();
+        for(Task task : taskList){
+            projectList.add(task.getProjectTitle());
+        }
+        return projectList;
     }
 
     public void filterByProject(String projectTitle){
@@ -65,17 +77,26 @@ public class TaskManager{
                 .filter(s -> projectTitle.equals(s.getProjectTitle()))
                 .forEach(s -> System.out.println(s.toString()));
 
-        /*taskList.forEach(
-                (Task task) -> {
-                    if(task.getProjectTitle().contains(projectTitle)){
-                        System.out.println(toString());
-                    }
-                }
-        );*/
+    }
+
+    public boolean doesTaskExist(String project){
+        for (Task task: taskList) {
+            if (task.getProjectTitle().equals(project)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addTask(Task task){
 
+        taskList.add(task);// used for testing in Main
+    }
+
+    public void taskAddition(String title, String dueDate,
+                             String description, String projectTitle){
+
+        Task task = new Task(title,dueDate,description,projectTitle);
         taskList.add(task);
     }
 
