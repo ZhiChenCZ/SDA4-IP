@@ -139,7 +139,7 @@ public class Task implements Comparable<Task>{
     }
 
     /**
-     * Accessor method to get boolean status of task completion.
+     * Accessor method to get boolean status of task.
      * @return The status of task.
      */
     public boolean doneStatus(){
@@ -166,16 +166,23 @@ public class Task implements Comparable<Task>{
     }
 
     /**
+     * Accesor method to get String version of dueDate
+     * @return String format date
+     */
+    public String getDateToPrint(){
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+        return formatter.format(dueDate);
+    }
+
+    /**
      * Prints entire task details.
      * @return Entire task details.
      */
     @Override
     public String toString(){
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-
-        String dateToPrint = formatter.format(dueDate);
-
+        String dateToPrint = getDateToPrint();
         String task = "Project Title: " + projectTitle + "\n" +
                 "Task title: "+ title + "\n" + "Deadline: "+ dateToPrint + "\n" +
                 "Description: " + description + "\n" + "Status: " + getStatus() + "\n";

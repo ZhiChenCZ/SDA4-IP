@@ -79,8 +79,8 @@ public class TaskManager{
 
     }
 
-    public boolean doesTaskExist(String project){
-        for (Task task: taskList) {
+    public boolean doesProjectExist(String project){
+        for (Task task : taskList) {
             if (task.getProjectTitle().equals(project)) {
                 return true;
             }
@@ -88,39 +88,27 @@ public class TaskManager{
         return false;
     }
 
+    public int selectTask(String project, String taskTitle){
+
+        int indexOfSelected = -1;
+        if(doesProjectExist(project)){
+            for(int i = 0; i < taskList.size(); i++){
+                String titleFromList = taskList.get(i).getTitle();
+                if(taskTitle.equals(titleFromList)){
+                    indexOfSelected = i;
+                }
+            }
+        }
+        return indexOfSelected; // -1 means new task;
+    }
+
+    public String getTaskStatus(int indexOfSelected){
+
+        return taskList.get(indexOfSelected).getStatus();
+    }
+
     public void addTask(Task task){
 
         taskList.add(task);// used for testing in Main
     }
-
-    public void taskAddition(String title, String dueDate,
-                             String description, String projectTitle){
-
-        Task task = new Task(title,dueDate,description,projectTitle);
-        taskList.add(task);
-    }
-
-    public void editTask(String projectTitle){
-
-        //To specify Task as there may be multiple tasks sharing the same title.
-        ArrayList<Task> narrowedList = new ArrayList<>();
-        for(Task task : taskList){
-            if (task.getProjectTitle().equals(projectTitle)){
-                narrowedList.add(task);
-            }
-        }
-    }
-
-    /*public void updateTitle(String title, String newTitle){
-
-        getNarrowedList();
-        for(Task task : narrowedList){
-            if (task.getTitle().equals(title)){
-                task.setTitle(newTitle);
-            }
-        }
-    }*/
-
-
-
 }
