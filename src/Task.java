@@ -187,8 +187,17 @@ public class Task implements Comparable<Task> {
      */
     public String getDateToPrint() {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-        return formatter.format(dueDate);
+        try
+        {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            return formatter.format(dueDate);
+        }
+        catch(NullPointerException e)
+        {
+            System.err.println("Please update with acceptable information" +
+                    " under Edit first.\n");
+            return "01-Jan-0001";
+        }
     }
 
     /**

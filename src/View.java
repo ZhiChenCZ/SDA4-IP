@@ -3,8 +3,18 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * View is the User Interface where
+ * (1) The reading and writing of input and output are respectively done.
+ * (2) Allows the user to navigate through the program.
+ * (3) Ensures the validity of user input.
+ *
+ * @author Zhi Chen
+ * @2018.10.12
+ */
 public class View{
 
     private boolean finished;
@@ -12,6 +22,12 @@ public class View{
     private Scanner read;
     private Scanner scanner;
 
+    /**
+     * Initialises fields.
+     * Scanner 'read' takes in integer values.
+     * Scanner 'scanner' takes in String.
+     * @param taskManager Links View with collection under TaskManager.
+     */
     public View(TaskManager taskManager){
 
         finished = false;
@@ -20,6 +36,12 @@ public class View{
         scanner = new Scanner(System.in); // reads String
     }
 
+    /**
+     * Prints the welcome page which includes the number of tasks yet to be done
+     * and tasks that are done.
+     *
+     * @return The welcome page.
+     */
     private String printWelcome() {
 
         return (">> Welcome to ToDoly\n" +
@@ -36,6 +58,11 @@ public class View{
 
     }
 
+    /**
+     * Ensures that input is strictly integer instead of characters.
+     *
+     * @return Any integer value.
+     */
     private int checkForIntegerValue() {
 
         int choice;
@@ -52,6 +79,10 @@ public class View{
         return choice;
     }
 
+    /**
+     * Writes from previously saved file and passes the information into
+     * the collection.
+     */
     private void retrieveFile() {
 
         String project = "start";
@@ -99,26 +130,34 @@ public class View{
         }
     }
 
-    private void createFile(Task task) {
+    /**
+     * Reads and creates a toDoly file on database.
+     *
+     * @param tasks Takes in tasks add during operation.
+     */
+    private void createFile(ArrayList<Task> tasks) {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("ToDoly List"))) {
-
-            writer.write(task.getProjectTitle());
-            writer.write('\n');
-            writer.write(task.getTitle());
-            writer.write('\n');
-            writer.write(task.getDateToPrint());
-            writer.write('\n');
-            writer.write(task.getDescription());
-            writer.write('\n');
-            writer.write(task.getStatus());
-            writer.write('\n');
-
+            for (Task task:tasks) {
+                writer.write(task.getProjectTitle());
+                writer.write('\n');
+                writer.write(task.getTitle());
+                writer.write('\n');
+                writer.write(task.getDateToPrint());
+                writer.write('\n');
+                writer.write(task.getDescription());
+                writer.write('\n');
+                writer.write(task.getStatus());
+                writer.write('\n');
+            }
         } catch (IOException e) {
             System.err.println("There was a problem saving.");
         }
     }
 
+    /**
+     * Starting point of toDoly.
+     */
     public void toDoly() {
 
         retrieveFile();
@@ -161,11 +200,19 @@ public class View{
         System.out.println("Thank you for using toDoly! Vi ses snart!");
     }
 
+    /**
+     * Alerts the user to errors.
+     */
     private void noTaskAlert() {
 
         System.out.println("There are currently no task saved. Please add tasks first.\n");
     }
 
+    /**
+     * Ensures unique task title in collection.
+     * @param taskTitle Task title of new task
+     * @return boolean result to drive if loop
+     */
     private boolean checkForTaskDuplicate(String taskTitle) {
 
         for(Task task : taskManager.getTaskList())
@@ -175,7 +222,12 @@ public class View{
         return false;
     }
 
-    private void menuOption1() {
+    /**
+     * Displays all tasks saved and allows the user to sort by date or filter by project.
+     *
+     * @throws NullPointerException
+     */
+    private void menuOption1() throws NullPointerException{
 
         if (taskManager.getTaskList().size() == 0) {
             noTaskAlert();
@@ -207,7 +259,7 @@ public class View{
                     }
                     System.out.print("Please enter the exact project title that" +
                             " you would like tasks to be filtered out by.\n> ");
-                    //Scanner scanner = new Scanner(System.in);
+
                     String projectName;
                     projectName = scanner.nextLine();
                     if (taskManager.doesProjectExist(projectName)) {
@@ -231,10 +283,14 @@ public class View{
         }
     }
 
+    /**
+     * Adds task into toDOly.
+     */
     private void menuOption2() {
 
         boolean quit = false;
         while (!quit) {
+
             System.out.print("> Pick an option:\n" +
                     "> (1) To add a new task.\n" +
                     "> (2) To return to Main Menu.\n> ");
@@ -247,9 +303,15 @@ public class View{
                     System.out.println("Please enter the information as guided.");
                     System.out.print("Project Title: ");
                     String projectTitle = scanner.nextLine();
+                    if(projectTitle.equals(null)){
+                      projectTitle = "Untitled.";
+                    }
 
                     System.out.print("Task title: ");
                     String title = scanner.nextLine();
+                    if(title.equals(null)){
+                        title = "No task title.";
+                    }
                     while (checkForTaskDuplicate(title)) {
                         System.out.print("Existing task title. Please choose another task title.");
                         if (scanner.hasNextLine()) {
@@ -286,6 +348,11 @@ public class View{
         }
     }
 
+    /**
+     * Allows user to update all of task's parameters and remove tasks from program.
+     *
+     * @throws NullPointerException
+     */
     private void menuOption3() throws NullPointerException {
 
         boolean quit = false;
@@ -299,7 +366,8 @@ public class View{
                 System.out.println(projectTitle);
             }
             System.out.print("Please enter the current Project Title, of which," +
-                    "you wish to update.\n> ");
+                    "you wish to update. If you wish to return to the Main Menu, please" +
+                    " press 'Enter'.\n> ");
             String projectName = scanner.nextLine();
 
             if (!taskManager.doesProjectExist(projectName)) {
@@ -346,23 +414,29 @@ public class View{
 
                             case 1:
                                 System.out.print("Please enter the new Project Title for previously" +
-                                        "selected task.\n> ");
+                                        " selected task.\n> ");
                                 String newProjectTitle = scanner.nextLine();
+                                if (projectName.equals(null)) {
+                                    projectName = "Untitled.";
+                                }
                                 taskManager.changeProject(indexOfTask, newProjectTitle);
                                 System.out.println(taskManager.getTaskList().get(indexOfTask));
                                 break;
 
                             case 2:
                                 System.out.print("Please enter the new Task Title for previously" +
-                                        "selected task.\n> ");
+                                        " selected task.\n> ");
                                 String newTaskTitle = scanner.nextLine();
+                                if (newTaskTitle.equals(null)) {
+                                    newTaskTitle = "No task title.";
+                                }
                                 taskManager.changeTaskTitle(indexOfTask, newTaskTitle);
                                 System.out.println(taskManager.getTaskList().get(indexOfTask));
                                 break;
 
                             case 3:
                                 System.out.print("Please enter the new Deadline in format of" +
-                                        "dd-mmm-yyyy (such as 12-Dec-2012).\n> ");
+                                        " dd-mmm-yyyy (such as 12-Dec-2012).\n> ");
                                 String newDueDate = scanner.nextLine();
                                 taskManager.changeDueDate(indexOfTask, newDueDate);
                                 System.out.println(taskManager.getTaskList().get(indexOfTask));
@@ -426,6 +500,9 @@ public class View{
         }
     }
 
+    /**
+     * Allows user to quit the program with or without saving.
+     */
     private void menuOption4() {
 
         boolean quit = false;
@@ -441,12 +518,12 @@ public class View{
             switch (command) {
 
                 case 1:
-                    System.out.println(taskManager.getTaskList());
                     for (Task task : taskManager.getTaskList()) {
-                        createFile(task);
-                        quit = true;
-                        finished = true;
+                        System.out.println(task);
                     }
+                    createFile(taskManager.getTaskList());
+                    quit = true;
+                    finished = true;
                     break;
 
                 case 2:
