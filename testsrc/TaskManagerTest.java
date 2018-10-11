@@ -67,22 +67,21 @@ class TaskManagerTest {
 
     }
 
-    /*@Test
+    @Test
     void getToDO() {
-        TaskManager tm = new TaskManager();
-        tm.addTask(new Task("task1","01-01-2012", "hello there!", "P"));
-        tm.addTask(new Task("task2","01-01-2012", "same date", "P2"));
-        tm.addTask(new Task("task1","10-01-2012", "same task title!", "P3"));
+
+        tm.addTask(new Task("task1","01-Jan-2012", "hello there!", "P"));
+        tm.addTask(new Task("task2","01-Feb-2012", "same date", "P2"));
+        tm.addTask(new Task("task1","10-Mar-2012", "same task title!", "P3"));
         int check = tm.getToDO();
         assertEquals(3,check);
     }
 
     @Test
-    //void getDone() {
-        TaskManager tm = new TaskManager();
-        tm.addTask(new Task("task1","01-01-2012", "hello there!", "P"));
-        tm.addTask(new Task("task2","01-01-2012", "same date", "P2"));
-        tm.addTask(new Task("task1","10-01-2012", "same task title!", "P3"));
+    void getDone() {
+        tm.addTask(new Task("task1","01-Sep-2012", "hello there!", "P"));
+        tm.addTask(new Task("task2","01-Oct-2012", "same date", "P2"));
+        tm.addTask(new Task("task1","10-Nov-2012", "same task title!", "P3"));
 
         int check = tm.getDone();
         tm.setCounter();
@@ -145,5 +144,5 @@ class TaskManagerTest {
 
     @Test
     void changeStatus() {
-    }*/
+    }
 }
