@@ -1,23 +1,3 @@
-Emphasis, aka italics, with *asterisks* or _underscores_.
-
-Strong emphasis, aka bold, with **asterisks** or __underscores__.
-
-Combined emphasis with **asterisks and _underscores_**.
-
-1. First ordered list item
-2. Another item
-⋅⋅* Unordered sub-list. 
-1. Actual numbers don't matter, just that it's a number
-⋅⋅1. Ordered sub-list
-..2. what sorcery is this
-4. And another item.
-
-⋅⋅⋅You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
-
-⋅⋅⋅To have a line break without a paragraph, you will need to use two trailing spaces.⋅⋅
-⋅⋅⋅Note that this line is separate, but within the same paragraph.⋅⋅
-⋅⋅⋅(This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
-
 SDA4-IP
 =============
 To-Do List Application allows user to keep track things(task) that they have to do.
@@ -56,14 +36,30 @@ User Manual
 
 ### Table of Contents
 
-####1. Option1
+####1. Show Task List
 Shows all the tasks in order of input.
-.. 1.1 Sorts the tasks in order of ascending deadline.
-.. 1.2 Allows the user to filter out tasks under each project. 
-#####
-####2. Option2
-####3. Option3
-####4. Option4
+1. Sorts the tasks in order of ascending deadline.
+2. Allows the user to filter out tasks under each project. 
+
+####2. Add New Task
+1. Guides the user throughout the process of inputting a new task.
+    + Any errors that might occur in the process of information input should be edited under "Edit Task".
+    + Function ensures no repeats of Task Title.
+    + Specific deadline format to be followed.
+
+####3. Edit Task
+Selection of specific task to be updated or removed from toDoly.
+1. Update parameters in task.
+    1. Project title.
+    2. Task title.
+    3. Deadline.
+    4. Description.
+2. Update the status of task from 'Pending Action.' to 'Completed.' and vice versa.
+3. To remove selected task.   
+
+####4. Save and Quit
+1. Save all changes made to toDoly and quit the program.
+2. To quit toDoly without saving any changes.
 
 Built with
 -----------            
